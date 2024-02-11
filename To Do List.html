@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vintage To-Do List</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #f3ebcd;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        nav {
+            text-align: right;
+            background-color: #f3ebcd;
+            padding: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #3d2916;
+            margin: 0 10px;
+            font-size: 16px;
+        }
+
+        #app {
+            max-width: 600px;
+            width: 100%;
+            background-color: #f9f2d2;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            margin: 200px auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #3d2916;
+            font-size: 28px;
+        }
+
+        input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0;
+            box-sizing: border-box;
+            border: 1px solid #3d2916;
+            border-radius: 4px;
+            font-size: 16px;
+            background-color: #f3ebcd;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #f3ebcd;
+            border: 1px solid #3d2916;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 8px;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        li:hover {
+            background-color: #f0dcb5;
+        }
+
+        button {
+            background-color: #3d2916;
+            color: #f3ebcd;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        button:hover {
+            background-color: #5a3c1f;
+        }
+
+        .checkbox {
+            margin-left: auto;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">Contact</a>
+        <a href="#">Sign In</a>
+    </nav>
+    <div id="app">
+        <h1>To-Do List</h1>
+        <input type="text" id="taskInput" placeholder="Add a new task...">
+        <ul id="taskList"></ul>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const taskInput = document.getElementById('taskInput');
+            const taskList = document.getElementById('taskList');
+
+            taskInput.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    addTask();
+                }
+            });
+
+            function addTask() {
+                const taskText = taskInput.value.trim();
+                if (taskText !== '') {
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+                        <span>${taskText}</span>
+                        <button onclick="removeTask(this)">Delete</button>
+                        <input type="checkbox" class="checkbox">
+                    `;
+                    taskList.appendChild(li);
+                    taskInput.value = '';
+                }
+            }
+
+            window.removeTask = function (element) {
+                const li = element.closest('li');
+                taskList.removeChild(li);
+            };
+        });
+    </script>
+</body>
+</html>
